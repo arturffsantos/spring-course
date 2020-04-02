@@ -4,9 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -56,7 +54,7 @@ public class UserRepositoryTests {
 	
 	
 	@Test
-	public void listTest() {
+	public void loginTest() {
 		User user = new User(null, "John", "john@test.com", "123", Role.ADMINISTRATOR, null, null);
 		User createdUser = userRepository.save(user);
 		Optional<User> result = userRepository.login("john@test.com", "123");
