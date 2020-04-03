@@ -42,7 +42,7 @@ public class UserRepositoryTests {
 	}
 	
 	@Test
-	public void getByIdTest() {
+	public void findByIdTest() {
 		User user = new User(null, "John", "john@test.com", "123", Role.ADMINISTRATOR, null, null);
 		User createdUser = userRepository.save(user);
 		
