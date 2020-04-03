@@ -8,5 +8,5 @@ import com.springcourse.domain.RequestStage;
 
 public interface RequestStageRepository extends JpaRepository<RequestStage, Long>{
 	
-	public List<RequestStage> findAllByRequest(Long id);
+	public List<RequestStage> findAllByRequestId(Long id);
 }
