@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.springcourse.domain.enums.Role;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
+@JsonIgnoreProperties(value = {"password","requests", "stages"}, allowSetters = true )
 @Entity(name = "user")
 public class User implements Serializable{
 	/**
