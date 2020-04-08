@@ -2,12 +2,15 @@ package com.springcourse.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springcourse.domain.Request;
 import com.springcourse.domain.RequestStage;
 import com.springcourse.domain.enums.RequestState;
+import com.springcourse.exception.NotFoundException;
 import com.springcourse.repository.RequestRepository;
 import com.springcourse.repository.RequestStageRepository;
 
@@ -29,7 +32,9 @@ public class RequestStageService {
 	}
 	
 	public RequestStage findById(Long id) {
-		return requestStageRepository.findById(id).get();
+		Optional<RequestStage> result = requestStageRepository.findById(id);
+		
+		return result.orElseThrow(() -> new NotFoundException("Stage not found with id = " + id));
 	}
 	
 	public List<RequestStage> listAllByRequestId(Long requestId){
