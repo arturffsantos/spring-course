@@ -69,9 +69,14 @@ public class UserResource {
 	}
 	
 	@GetMapping("/{id}/requests")
-	public ResponseEntity<List<Request>> listAllRequestsByOwnerId(@PathVariable(name = "id") Long id){
-		List<Request> requests = requestService.listAllByOwnerId(id);
+	public ResponseEntity<PageModel<Request>> listAllRequestsByOwnerId(
+			@PathVariable(name = "id") Long id,
+			@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size){
 		
-		return ResponseEntity.ok(requests);
+		PageRequestModel pr = new PageRequestModel(page -1, size);
+		PageModel<Request> pm = requestService.listAllByOwnerIdOnLazyMode(id, pr);
+		
+		return ResponseEntity.ok(pm);
 	}
 }
