@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,9 +15,13 @@ import com.springcourse.domain.enums.Role;
 @SpringBootTest
 public class UserRepositoryTests {
 	@Autowired private UserRepository userRepository;
+	@Autowired private RequestRepository requestRepository;
+	@Autowired private RequestStageRepository stageRepository;
 	
-	@AfterEach
+	@BeforeEach
 	public void clean() {
+		stageRepository.deleteAll();
+		requestRepository.deleteAll();
 		userRepository.deleteAll();
 	}
 	
@@ -61,6 +65,20 @@ public class UserRepositoryTests {
 		User loggedUser = result.get();
 		
 		assertThat(loggedUser.getId()).isEqualTo(createdUser.getId());
+	}
+	
+	
+	public void updateRoleTest() {
+		User user = new User(null, "John", "john@test.com", "123", Role.SIMPLE, null, null);
+		User createdUser = userRepository.save(user);
+		
+		int affectedRows = userRepository.updateRole(createdUser.getId(), Role.ADMINISTRATOR);
+		
+		Optional<User> result = userRepository.findById(createdUser.getId());
+		user = result.get();
+		
+		assertThat(user.getRole()).isEqualTo(Role.ADMINISTRATOR);
+		assertThat(affectedRows).isEqualTo(1);
 	}
 	
 }
